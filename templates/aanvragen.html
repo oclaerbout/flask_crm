@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content">
+    <nav class="mb-3" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a href="#!">Page 1</a></li>
+            <li class="breadcrumb-item"><a href="#!">Page 2</a></li>
+            <li class="breadcrumb-item active">Machine Aanvragen</li>
+        </ol>
+    </nav>
+    <div class="mb-9">
+        <div class="row g-2 mb-4">
+            <div class="col-auto">
+                <h2 class="mb-0">Binnenkomende aanvragen</h2>
+            </div>
+        </div>
+        <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-body-emphasis border-top border-bottom border-translucent position-relative top-1">
+            <div class="table-responsive scrollbar-overlay mx-n1 px-1">
+                <table class="table table-sm fs-9 mb-0">
+                    <thead>
+                        <tr>
+                            <th class="sort align-middle pe-5" scope="col" data-sort="date" style="width:15%;">AANVRAAG ID</th>
+                            <th class="sort align-middle pe-5" scope="col" data-sort="type" style="width:15%;">TYPE AANVRAAG</th>
+                            <th class="sort align-middle pe-5" scope="col" data-sort="date" style="width:15%;">DATUM AANVRAAG</th>
+                            <th class="sort align-middle pe-5" scope="col" data-sort="description" style="width:35%;">BESCHRIJVING</th>
+                            <th class="sort align-middle pe-5" scope="col" data-sort="status" style="width:15%;">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="list">
+                    {% for aanvraag in aanvraaglijst %}
+                        <tr>
+                            <td class="date align-middle pe-5">{{ aanvraag.id }}</td>
+                            <td class="type align-middle pe-5 fw-bold">{{ aanvraag.type }}</td>
+                            <td class="type align-middle pe-5 fw-bold">{{ aanvraag.aanvraag_datum }}</td>
+                            <td class="description align-middle pe-5">{{ aanvraag.email }}</td>
+                            <td class="status align-middle pe-5">
+{#                                <span class="badge #}
+{#                                    {% if aanvraag.status == 'Nieuw' %}bg-warning{% elif aanvraag.status == 'Afgewerkt' %}bg-success{% else %}bg-secondary{% endif %}">#}
+{#                                    {{ aanvraag.status }}#}
+{#                                </span>#}
+                                {% for status in aanvraag.status.split(',') %}
+                                    <span class="badge
+                                        {% if status.strip() == 'Nieuw' %}bg-primary bg-opacity-50
+                                        {% elif status.strip() == 'Aanvraag type gedetecteerd' %}bg-info
+                                        {% elif status.strip() == 'Machine herkend' %}bg-success bg-opacity-50
+                                        {% elif status.strip() == 'Machine terug beschikbaar' %}bg-success
+                                        {% elif status.strip() == 'Machine in herstellijst' %}bg-dark
+                                        {% elif status.strip() == 'Machine niet herkend of niet beschikbaar' %}bg-danger
+                                        {% elif status.strip() == 'Gereserveerd' %}bg-warning
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ status.strip() }}
+                                    </span>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
