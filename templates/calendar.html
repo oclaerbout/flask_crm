@@ -49,15 +49,18 @@
 {% endblock %}
 
 {% block scripts %}
-  <!-- Externe dependencies vóór FullCalendar -->
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-
 <!-- FullCalendar laden -->
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/main.min.js"></script>
 <script>
   console.log('FullCalendar beschikbaar:', window.FullCalendar);
 </script>
+
+<!-- Events Data from Python -->
+<script>
+  var calendarEvents = {{ events | tojson | safe }};
+  console.log('Events from Python:', calendarEvents); // For debugging
+</script>
+
   <!-- Je eigen calendar.js of de script die fullCalendarInit gebruikt -->
   <script src="{{ url_for('static', filename='assets/js/calendar.js') }}"></script>
 {% endblock %}
