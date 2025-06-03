@@ -46,45 +46,19 @@
         <div class="calendar-outline mt-6 mb-9" id="appCalendar"></div>
     </div>
 
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('appCalendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek'
-                },
-                events: JSON.parse('{{ events|tojson|safe }}')
-
-            });
-            calendar.render();
-        });
-    </script>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/main.min.js"></script>
 {% endblock %}
 
 {% block scripts %}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('appCalendar');
-            var events = {{ events | tojson | safe }};
+  <!-- Externe dependencies vóór FullCalendar -->
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek'
-                },
-                events: events
-            });
-
-            calendar.render();
-        });
-    </script>
+<!-- FullCalendar laden -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/main.min.js"></script>
+<script>
+  console.log('FullCalendar beschikbaar:', window.FullCalendar);
+</script>
+  <!-- Je eigen calendar.js of de script die fullCalendarInit gebruikt -->
+  <script src="{{ url_for('static', filename='assets/js/calendar.js') }}"></script>
 {% endblock %}
 
